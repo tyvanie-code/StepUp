@@ -1,0 +1,6 @@
+{
+  "name": "Internship Journey",
+  "description": "Aplikasi manajemen dan dokumentasi kegiatan magang siswa SMA modern, lengkap dengan jurnal harian, absensi, progress, to-do list, catatan pembimbing, galeri, dan laporan PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

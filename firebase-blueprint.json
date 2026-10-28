@@ -1,0 +1,171 @@
+{
+  "entities": {
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Profil lengkap siswa peserta magang",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "maxLength": 150 },
+        "nisn": { "type": "string", "maxLength": 30 },
+        "classGrade": { "type": "string", "maxLength": 50 },
+        "major": { "type": "string", "maxLength": 100 },
+        "schoolName": { "type": "string", "maxLength": 150 },
+        "schoolAddress": { "type": "string", "maxLength": 255 },
+        "schoolSupervisorName": { "type": "string", "maxLength": 150 },
+        "schoolSupervisorPhone": { "type": "string", "maxLength": 30 },
+        "companyName": { "type": "string", "maxLength": 150 },
+        "companyAddress": { "type": "string", "maxLength": 255 },
+        "department": { "type": "string", "maxLength": 100 },
+        "mentorName": { "type": "string", "maxLength": 150 },
+        "mentorPhone": { "type": "string", "maxLength": 30 },
+        "mentorEmail": { "type": "string", "maxLength": 100 },
+        "startDate": { "type": "string", "maxLength": 20 },
+        "endDate": { "type": "string", "maxLength": 20 },
+        "targetWorkDays": { "type": "number" },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "bio": { "type": "string", "maxLength": 500 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["fullName", "schoolName", "companyName", "department", "mentorName"]
+    },
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "Catatan logbook kegiatan harian magang siswa",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 20 },
+        "startTime": { "type": "string", "maxLength": 10 },
+        "endTime": { "type": "string", "maxLength": 10 },
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "keyLearnings": { "type": "string", "maxLength": 2000 },
+        "obstacles": { "type": "string", "maxLength": 2000 },
+        "solutions": { "type": "string", "maxLength": 2000 },
+        "mood": { "type": "string", "enum": ["semangat", "senang", "biasa", "lelah", "bingung"] },
+        "tags": { "type": "array" },
+        "verifiedByMentor": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["date", "title", "description", "mood"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Pencatatan presensi dan jam kerja harian siswa",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 20 },
+        "checkInTime": { "type": "string", "maxLength": 10 },
+        "checkOutTime": { "type": "string", "maxLength": 10 },
+        "status": { "type": "string", "enum": ["hadir", "wfh", "izin", "sakit", "libur"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "location": { "type": "string", "maxLength": 150 }
+      },
+      "required": ["date", "status"]
+    },
+    "TodoTask": {
+      "title": "TodoTask",
+      "description": "Tugas magang dengan tenggat waktu dan status pengerjaan",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 1500 },
+        "dueDate": { "type": "string", "maxLength": 20 },
+        "priority": { "type": "string", "enum": ["rendah", "sedang", "tinggi"] },
+        "status": { "type": "string", "enum": ["belum", "sedang", "selesai"] },
+        "category": { "type": "string", "maxLength": 100 },
+        "completedAt": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["title", "priority", "status", "category"]
+    },
+    "SelfReflection": {
+      "title": "SelfReflection",
+      "description": "Lembar refleksi perkembangan diri dan tantangan magang",
+      "type": "object",
+      "properties": {
+        "periodTitle": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "memorableExperience": { "type": "string", "maxLength": 2000 },
+        "newSkills": { "type": "array" },
+        "mainChallenges": { "type": "string", "maxLength": 2000 },
+        "personalGrowth": { "type": "string", "maxLength": 2000 },
+        "goalsToImprove": { "type": "string", "maxLength": 2000 }
+      },
+      "required": ["periodTitle", "date"]
+    },
+    "MentorEvaluation": {
+      "title": "MentorEvaluation",
+      "description": "Evaluasi dan penilaian dari pembimbing",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 20 },
+        "mentorName": { "type": "string", "maxLength": 150 },
+        "mentorRole": { "type": "string", "enum": ["Pembimbing Lapangan", "Guru Pembimbing Sekolah"] },
+        "category": { "type": "string", "enum": ["Kedisiplinan", "Performa Kerja", "Inisiatif & Kreativitas", "Komunikasi & Kerjasama", "Etika & Sikap"] },
+        "rating": { "type": "number" },
+        "comments": { "type": "string", "maxLength": 2000 },
+        "recommendations": { "type": "string", "maxLength": 2000 }
+      },
+      "required": ["date", "mentorName", "mentorRole", "category", "rating"]
+    },
+    "DocumentationPhoto": {
+      "title": "DocumentationPhoto",
+      "description": "Foto dokumentasi kegiatan magang",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "category": { "type": "string", "enum": ["Proyek", "Briefing & Diskusi", "Presentasi", "Kegiatan Lapangan", "Lainnya"] },
+        "imageUrl": { "type": "string", "maxLength": 2000 }
+      },
+      "required": ["title", "date", "imageUrl", "category"]
+    },
+    "CompetencyItem": {
+      "title": "CompetencyItem",
+      "description": "Target kompetensi keahlian yang harus dicapai siswa",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "enum": ["Teknis", "Soft Skill", "Administrasi"] },
+        "isCompleted": { "type": "boolean" },
+        "completedDate": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["title", "category", "isCompleted"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/StudentProfile" },
+      "description": "Profil siswa magang pemilik akun"
+    },
+    "/users/{userId}/journals/{journalId}": {
+      "schema": { "$ref": "#/entities/JournalEntry" },
+      "description": "Koleksi catatan jurnal harian siswa"
+    },
+    "/users/{userId}/attendance/{attendanceId}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Riwayat absensi dan kehadiran siswa"
+    },
+    "/users/{userId}/todos/{todoId}": {
+      "schema": { "$ref": "#/entities/TodoTask" },
+      "description": "Daftar tugas magang siswa"
+    },
+    "/users/{userId}/reflections/{reflectionId}": {
+      "schema": { "$ref": "#/entities/SelfReflection" },
+      "description": "Lembar refleksi diri berkala"
+    },
+    "/users/{userId}/evaluations/{evaluationId}": {
+      "schema": { "$ref": "#/entities/MentorEvaluation" },
+      "description": "Catatan evaluasi pembimbing lapangan / guru"
+    },
+    "/users/{userId}/gallery/{photoId}": {
+      "schema": { "$ref": "#/entities/DocumentationPhoto" },
+      "description": "Galeri foto dokumentasi magang siswa"
+    },
+    "/users/{userId}/competencies/{competencyId}": {
+      "schema": { "$ref": "#/entities/CompetencyItem" },
+      "description": "Daftar target kompetensi kejuruan magang"
+    }
+  }
+}

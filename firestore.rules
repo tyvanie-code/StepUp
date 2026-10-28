@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default-deny all unexpected collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Hardened Security Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Root User Document (Student Profile & Preferences)
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false; // Protect user directory from scraping
+      allow create, update: if isOwner(userId) && isValidId(userId);
+      allow delete: if isOwner(userId) && isValidId(userId);
+
+      // 1. Jurnal Harian Subcollection
+      match /journals/{journalId} {
+        allow get: if isOwner(userId) && isValidId(journalId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(journalId);
+        allow update: if isOwner(userId) && isValidId(journalId);
+        allow delete: if isOwner(userId) && isValidId(journalId);
+      }
+
+      // 2. Absensi Subcollection
+      match /attendance/{attendanceId} {
+        allow get: if isOwner(userId) && isValidId(attendanceId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(attendanceId);
+        allow update: if isOwner(userId) && isValidId(attendanceId);
+        allow delete: if isOwner(userId) && isValidId(attendanceId);
+      }
+
+      // 3. To-Do Tasks Subcollection
+      match /todos/{todoId} {
+        allow get: if isOwner(userId) && isValidId(todoId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(todoId);
+        allow update: if isOwner(userId) && isValidId(todoId);
+        allow delete: if isOwner(userId) && isValidId(todoId);
+      }
+
+      // 4. Refleksi Diri Subcollection
+      match /reflections/{reflectionId} {
+        allow get: if isOwner(userId) && isValidId(reflectionId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(reflectionId);
+        allow update: if isOwner(userId) && isValidId(reflectionId);
+        allow delete: if isOwner(userId) && isValidId(reflectionId);
+      }
+
+      // 5. Catatan Pembimbing Subcollection
+      match /evaluations/{evaluationId} {
+        allow get: if isOwner(userId) && isValidId(evaluationId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(evaluationId);
+        allow update: if isOwner(userId) && isValidId(evaluationId);
+        allow delete: if isOwner(userId) && isValidId(evaluationId);
+      }
+
+      // 6. Galeri Dokumentasi Foto Subcollection
+      match /gallery/{photoId} {
+        allow get: if isOwner(userId) && isValidId(photoId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(photoId);
+        allow update: if isOwner(userId) && isValidId(photoId);
+        allow delete: if isOwner(userId) && isValidId(photoId);
+      }
+
+      // 7. Target Kompetensi Kejuruan Subcollection
+      match /competencies/{competencyId} {
+        allow get: if isOwner(userId) && isValidId(competencyId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(competencyId);
+        allow update: if isOwner(userId) && isValidId(competencyId);
+        allow delete: if isOwner(userId) && isValidId(competencyId);
+      }
+    }
+  }
+}
